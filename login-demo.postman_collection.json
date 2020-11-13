@@ -1,0 +1,394 @@
+{
+	"info": {
+		"_postman_id": "b2ebf563-c57f-4eba-a4ca-080dc18b463d",
+		"name": "login-demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "85f67ac7-70bb-4d8e-8066-3f71bb49a0a7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });\r",
+							"pm.test(\"Authorization, success\", function () { pm.response.to.have.jsonBody;});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Admin User"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n     \"password\": \"admin\"\r\n}"
+				},
+				"url": {
+					"raw": "http://altoromutual.com/api/login?uid=admin&passw=admin&btnSubmit=Login",
+					"protocol": "http",
+					"host": [
+						"altoromutual",
+						"com"
+					],
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "uid",
+							"value": "admin"
+						},
+						{
+							"key": "passw",
+							"value": "admin"
+						},
+						{
+							"key": "btnSubmit",
+							"value": "Login"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Naviagte to Webpage",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5cac0ef7-85ed-474e-8e1c-f4b2a7d0a302",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Online Banking Login\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://altoromutual.com/login.jsp",
+					"protocol": "http",
+					"host": [
+						"altoromutual",
+						"com"
+					],
+					"path": [
+						"login.jsp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1e3ce285-7d68-46d8-b794-fba7c8cef2c8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });\r",
+							"\r",
+							"pm.test(\"Response property matches environment variable\", function () {\r",
+							"  pm.expect(pm.response.json().name).to.eql(pm.environment.get(\"Corporate\"));\r",
+							"  pm.expect(pm.response.json().id).to.eql(pm.environment.get(\"800000\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "WVdSdGFXND06WVdSdGFXND06C3p0P1kZPw=="
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "http://altoromutual.com:8080/api/account",
+					"protocol": "http",
+					"host": [
+						"altoromutual",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account - Transfer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17a7a3b6-017a-46c8-9a72-c7c4b49011d3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Success message diaplayed\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"successfully transferred\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\" Failed message diaplyed\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Internal Server Error\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "WVdSdGFXND06WVdSdGFXND06C3p0P1kZPw==",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"toAccount\": \"800002\",\r\n  \"fromAccount\": \"800003\",\r\n  \"transferAmount\": \"200\"\r\n}"
+				},
+				"url": {
+					"raw": "http://altoromutual.com:8080/api/transfer",
+					"protocol": "http",
+					"host": [
+						"altoromutual",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account - Transactions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c1b42c4a-4d8a-44e1-ae6e-67738ee2e9c8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"To Check if Value is Null\", function() {\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.transactions).not.eq(null);}\r",
+							");\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "WVdSdGFXND06WVdSdGFXND06C3p0P1kZPw=="
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"startDate\": \"2012-03-12\", \"endDate\": \"2012-03-17\"}"
+				},
+				"url": {
+					"raw": "http://altoromutual.com:8080/api/account/800000/transactions",
+					"protocol": "http",
+					"host": [
+						"altoromutual",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"800000",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Feedback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5d5108ff-8ac3-4d80-a1a1-08dfe236002c",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"J Smith\", \"email\": \"jsmtih@altoromutual.com\", \"subject\": \"Amazing web design\", \"message\": \"I like the new look of your applicaiton\"}"
+				},
+				"url": {
+					"raw": "http://altoromutual.com:8080/api/feedback/submit",
+					"protocol": "http",
+					"host": [
+						"altoromutual",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"feedback",
+						"submit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "94e0ae66-87c7-4968-907c-9b281f65558c",
+						"exec": [
+							"pm.test(\"Logout success \", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"LoggedOut\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://altoromutual.com:8080/api/logout",
+					"protocol": "http",
+					"host": [
+						"altoromutual",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"id": "baseUrl",
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
